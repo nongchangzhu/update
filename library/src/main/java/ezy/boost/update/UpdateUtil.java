@@ -27,8 +27,11 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -126,7 +129,22 @@ public class UpdateUtil {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
         if (force) {
-            //System.exit(0);
+            final AlertDialog dialog = new AlertDialog.Builder(context).create();
+
+            dialog.setTitle("应用更新");
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+
+
+            float density = context.getResources().getDisplayMetrics().density;
+            TextView tv = new TextView(context);
+            tv.setMovementMethod(new ScrollingMovementMethod());
+            tv.setVerticalScrollBarEnabled(true);
+            tv.setTextSize(14);
+            tv.setMaxHeight((int) (250 * density));
+            tv.setText("您需要更新应用才能继续使用！" );
+            dialog.setView(tv, (int) (25 * density), (int) (15 * density), (int) (25 * density), 0);
+            dialog.show();
         }
     }
 
