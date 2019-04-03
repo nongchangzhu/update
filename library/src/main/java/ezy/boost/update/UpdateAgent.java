@@ -35,6 +35,7 @@ import java.io.File;
 class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
 
     private Context mContext;
+    private Context mRealContext;
     private String mUrl;
     private File mTmpFile;
     private File mApkFile;
@@ -56,6 +57,7 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
 
     public UpdateAgent(Context context, String url, boolean isManual, boolean isWifiOnly, int notifyId) {
         mContext = context.getApplicationContext();
+        mRealContext=context;
         mUrl = url;
         mIsManual = isManual;
         mIsWifiOnly = isWifiOnly;
@@ -254,7 +256,7 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
     }
 
     void doInstall() {
-        UpdateUtil.install(mContext, mApkFile, mInfo.isForce);
+        UpdateUtil.install(mContext,mRealContext, mApkFile, mInfo.isForce);
     }
 
     void doFailure(UpdateError error) {
