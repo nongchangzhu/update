@@ -126,7 +126,7 @@ public class UpdateUtil {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
         if (force) {
-            System.exit(0);
+            //System.exit(0);
         }
     }
 
